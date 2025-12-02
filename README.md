@@ -14,18 +14,6 @@ A comprehensive real-time eye tracking application using OpenCV and MediaPipe to
 - ✅ Face mesh landmark detection using MediaPipe
 - ✅ Visual feedback with annotated video frames
 
-### Level 2: Advanced Functionality
-- ✅ **CSV export** - Save session data (timestamp, EAR, state, gaze direction)
-- ✅ **Configurable threshold** - Adjust EAR threshold via keyboard (+/- keys)
-- ✅ **Temporal smoothing** - Reduce jitter with moving average filter
-- ✅ **Video file input** - Process pre-recorded videos in addition to webcam
-
-### Level 3: Research Extensions
-- ✅ **Drowsiness detection** - Alert when eyes remain closed for extended periods
-- ✅ **Gaze direction estimation** - Detect horizontal (left/center/right) and vertical (up/center/down) gaze
-- ✅ **Algorithm comparison** - Compare EAR vs. Pupil Distance Ratio methods
-- ✅ **Technical report generation** - Automated analysis and statistics report
-
 ## Phase 1: Environment Setup
 
 ### Prerequisites
