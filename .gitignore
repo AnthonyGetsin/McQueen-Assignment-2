@@ -1,0 +1,8 @@
+# Exclude everything by default
+*
+
+# But include these files/folders
+!.gitignore
+!eye_tracker.py
+!tests/
+!tests/**
