@@ -1,270 +1,159 @@
 # Eye Tracking Project
 
-A comprehensive real-time eye tracking application using OpenCV and MediaPipe to detect and analyze eye movements, blink patterns, gaze direction, and drowsiness.
+A real-time eye tracking application using OpenCV and MediaPipe to detect face landmarks, calculate Eye Aspect Ratio (EAR), and track blink patterns with duration measurement.
 
-## Features
+## Project Description
 
-### Level 1: Enhanced Features
-- ✅ Real-time eye tracking using webcam or video files
-- ✅ Eye Aspect Ratio (EAR) calculation for blink detection
-- ✅ **Blink count tracking** over time (left, right, and both eyes)
-- ✅ **Blink frequency calculation** (blinks per minute)
-- ✅ **Blink duration measurement** (average, min, max)
-- ✅ **Independent eye tracking** - detect winking (one eye closed, other open)
-- ✅ Face mesh landmark detection using MediaPipe
-- ✅ Visual feedback with annotated video frames
+This project implements a real-time eye tracking system that:
 
-## Phase 1: Environment Setup
+- Detects facial landmarks using MediaPipe Face Mesh
+- Calculates Eye Aspect Ratio (EAR) for both eyes
+- Detects and counts blinks in real-time
+- Measures blink duration (average, min, max)
+- Displays eye meshes and metrics on video feed
+- Provides console output with detailed status information
+
+The system uses threshold-based classification where EAR values below 0.20 indicate closed eyes. Temporal smoothing requires 2 consecutive frames below threshold to reduce false positives.
+
+## Installation Instructions
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.8 or higher (Python 3.11-3.12 recommended for MediaPipe compatibility)
 - Webcam/camera access
+- pip package manager
 
-### Installation Steps
+### Setup Steps
 
-1. **Set up Python virtual environment**
+1. **Clone or download this repository**
 
+2. **Create a virtual environment**
    ```bash
-   # Create virtual environment
    python3 -m venv venv
-   
-   # Activate virtual environment
+   ```
+
+3. **Activate the virtual environment**
+   ```bash
    # On macOS/Linux:
    source venv/bin/activate
+   
    # On Windows:
    venv\Scripts\activate
    ```
 
-2. **Install required packages**
-
+4. **Install dependencies**
+   ```bash
+   pip install opencv-python numpy mediapipe
+   ```
+   
+   Or if you have a `requirements.txt`:
    ```bash
    pip install -r requirements.txt
    ```
 
-   This will install:
-   - `opencv-python`: Computer vision library for webcam access and image processing
-   - `mediapipe`: Google's framework for face mesh detection
-   - `numpy`: Numerical computing library
-   - `scipy`: Scientific computing library
-   - `pandas`: Data analysis library for CSV export
+## Usage Examples
 
-3. **Run Phase 1 tests**
+### Basic Usage
 
-   Run the Phase 1 test script to verify everything is set up correctly:
-   ```bash
-   python tests/test_phase1_setup.py
-   ```
-
-   This will:
-   - Verify MediaPipe installation and display version
-   - Test webcam access and frame capture
-   - Optionally display webcam feed (press 'q' to quit)
-
-### Deliverable
-
-A working webcam display using OpenCV that confirms:
-- Virtual environment is set up correctly
-- All dependencies are installed
-- Webcam can be accessed and frames can be captured
-- MediaPipe is properly installed and importable
-
-## Phase 2: Face Detection
-
-### Tasks
-
-1. **Initialize MediaPipe Face Mesh**
-   - Set up Face Mesh with appropriate parameters
-   - Configure detection and tracking confidence thresholds
-
-2. **Process webcam frames and detect face**
-   - Capture frames from webcam
-   - Convert BGR to RGB for MediaPipe
-   - Process frames through Face Mesh
-
-3. **Extract and visualize all facial landmarks**
-   - Extract 468 facial landmarks from MediaPipe
-   - Draw face mesh contours and tesselation
-   - Visualize landmarks in real-time
-
-4. **Handle "no face detected" gracefully**
-   - Check if face is detected before processing
-   - Display appropriate message when no face is found
-   - Continue processing without errors
-
-### Testing Phase 2
-
-Run the Phase 2 test script:
+Run the eye tracker with default settings:
 ```bash
-python tests/test_phase2_face_detection.py
-```
-
-This will:
-- Test Face Mesh initialization
-- Test face detection on a single frame
-- Optionally run real-time face landmark detection
-
-### Deliverable
-
-Real-time face landmark detection that:
-- Successfully initializes MediaPipe Face Mesh
-- Detects faces in webcam frames
-- Visualizes all 468 facial landmarks
-- Handles "no face detected" cases gracefully
-- Runs smoothly in real-time
-
-## Project Structure
-
-```
-eye_tracking_project/
-├── requirements.txt              # Python dependencies
-├── README.md                    # Project documentation
-├── eye_tracker.py               # Main eye tracking application (enhanced)
-└── tests/
-    ├── test_phase1_setup.py     # Phase 1 environment setup tests
-    └── test_phase2_face_detection.py  # Phase 2 face detection tests
-```
-
-## Feature Details
-
-### Level 1: Enhanced Features
-
-**Blink Tracking:**
-- Tracks blinks independently for left and right eyes
-- Counts total blinks, individual eye blinks, and both-eye blinks
-- Calculates real-time blink frequency (blinks per minute)
-- Measures blink duration in milliseconds
-
-**Wink Detection:**
-- Detects when one eye is closed while the other remains open
-- Distinguishes between left winks and right winks
-- Useful for gesture recognition applications
-
-### Level 2: Advanced Functionality
-
-**CSV Export:**
-- Exports comprehensive session data including:
-  - Timestamp for each frame
-  - EAR values (left, right, average)
-  - Eye states (open/closed)
-  - Gaze direction estimates
-  - Blink counts and frequency
-  - Drowsiness detection status
-
-**Configurable Threshold:**
-- Adjust EAR threshold in real-time using keyboard
-- Allows fine-tuning for different lighting conditions or users
-- Changes take effect immediately
-
-**Temporal Smoothing:**
-- Uses moving average filter to reduce jitter
-- Configurable window size (default: 5 frames)
-- Improves stability of blink detection
-
-**Video File Support:**
-- Process pre-recorded video files
-- Useful for offline analysis and testing
-- Maintains all features (blink tracking, CSV export, etc.)
-
-### Level 3: Research Extensions
-
-**Drowsiness Detection:**
-- Monitors extended eye closure periods
-- Configurable threshold (default: 2 seconds)
-- Alerts when drowsiness is detected
-- Tracks drowsiness events in session data
-
-**Gaze Direction Estimation:**
-- Estimates horizontal gaze (left/center/right)
-- Estimates vertical gaze (up/center/down)
-- Based on eye position relative to facial landmarks
-- Useful for attention and focus analysis
-
-**Algorithm Comparison:**
-- Implements both EAR (Eye Aspect Ratio) and Pupil Distance Ratio methods
-- Compares performance in technical report
-- Provides insights into algorithm effectiveness
-
-**Technical Report:**
-- Automated generation of comprehensive analysis
-- Includes statistics, comparisons, and recommendations
-- Useful for research and documentation purposes
-
-## Usage
-
-### Running the Eye Tracker
-
-#### Basic Usage (Webcam)
-```bash
-# Activate virtual environment
-source venv/bin/activate
-
-# Run the main eye tracker with default settings
 python eye_tracker.py
 ```
 
-#### Advanced Usage Options
-```bash
-# Process a video file instead of webcam
-python eye_tracker.py --video path/to/video.mp4
+### What to Expect
 
-# Customize EAR threshold (default: 0.25)
-python eye_tracker.py --threshold 0.30
+- A window opens showing your webcam feed
+- Eye meshes are drawn over your eyes
+- Real-time metrics displayed on screen:
+  - Frame number
+  - Left EAR value (cyan)
+  - Right EAR value (magenta)
+  - Average EAR (yellow)
+  - Blink status (red for blinking, green for open)
+  - Total blink count
+  - Average blink duration (when available)
+  - EAR threshold value
 
-# Adjust temporal smoothing window (default: 5)
-python eye_tracker.py --smoothing 10
+### Controls
 
-# Set drowsiness detection threshold in seconds (default: 2.0)
-python eye_tracker.py --drowsiness 3.0
+- **Press 'q'** - Quit the application
 
-# Combine options
-python eye_tracker.py --video test.mp4 --threshold 0.28 --smoothing 7
+### Console Output
+
+The application provides detailed console output:
+- Startup information (camera resolution, FPS, settings)
+- Periodic status updates (every 30 frames)
+- Blink detection alerts with duration
+- Shutdown statistics (total frames, blinks, duration stats)
+
+### Example Console Output
+
+```
+============================================================
+🎯 Eye Tracker Started Successfully
+============================================================
+📹 Camera Resolution: 640x480 @ 30 FPS
+⚙️  EAR Threshold: 0.2
+📊 Blink Frame Threshold: 2 frames
+============================================================
+
+[Frame 30] 👁️ OPEN | L_EAR: 0.312 | R_EAR: 0.298 | Avg: 0.305 | Blinks: 0
+[Frame 60] 👁️ CLOSED | L_EAR: 0.185 | R_EAR: 0.172 | Avg: 0.179 | Blinks: 1 | Duration: 45.2ms
+[Frame 90] 👁️ OPEN | L_EAR: 0.308 | R_EAR: 0.301 | Avg: 0.305 | Blinks: 1 | Avg Duration: 45.2ms
 ```
 
-### Keyboard Controls
+## Known Limitations
 
-While the eye tracker is running:
-- **'q'** - Quit the application
-- **'+' or '='** - Increase EAR threshold by 0.01
-- **'-'** - Decrease EAR threshold by 0.01
-- **'s'** - Save current session data to CSV file
-- **'r'** - Generate technical report
+1. **MediaPipe Compatibility**: MediaPipe may not be available for Python 3.13+. Use Python 3.11 or 3.12 for best compatibility.
 
-### Output Files
+2. **Single Face Detection**: The system is configured to detect only one face at a time (`max_num_faces=1`).
 
-The application automatically generates:
-1. **CSV Session Data** (`eye_tracking_session_YYYYMMDD_HHMMSS.csv`):
-   - Timestamp for each frame
-   - Left/Right/Average EAR values
-   - Eye states (open/closed)
-   - Gaze direction
-   - Blink counts and frequency
-   - Drowsiness detection status
+3. **False Positives**: When looking up or when eyes are partially occluded (e.g., hand covering eyes), the system may detect false blinks or show "Face Not Fully Visible" messages. This is mitigated with temporal smoothing but may still occur.
 
-2. **Technical Report** (`technical_report_YYYYMMDD_HHMMSS.txt`):
-   - Session statistics (duration, FPS, frame count)
-   - Blink statistics (count, frequency, duration)
-   - EAR statistics (mean, min, max, std dev)
-   - Algorithm comparison (EAR vs. Pupil Distance Ratio)
-   - Drowsiness event analysis
-   - Gaze direction distribution
-   - Recommendations and findings
+4. **Lighting Sensitivity**: Performance depends on good lighting conditions. Poor lighting may affect face detection accuracy.
 
-Files are saved automatically when you quit the application, or manually when pressing 's' (CSV) or 'r' (report).
+5. **Camera Requirements**: Requires a working webcam/camera. The system defaults to camera index 0.
 
-### Running Tests
+6. **Real-time Performance**: Processing speed depends on your hardware. Lower-end systems may experience reduced frame rates.
 
-```bash
-# Phase 1: Environment setup
-python tests/test_phase1_setup.py
+7. **EAR Threshold**: The default threshold (0.20) may need adjustment for different users or lighting conditions. This is not currently configurable without modifying the code.
 
-# Phase 2: Face detection
-python tests/test_phase2_face_detection.py
-```
+8. **No Calibration**: The system doesn't perform user-specific calibration. EAR thresholds are fixed.
 
-**Note:** MediaPipe may not be available for Python 3.13+. If you encounter import errors, consider using Python 3.11 or 3.12.
+## Code Documentation
 
-## License
+### Main Components
 
-(To be added)
+**`EyeTracker` class** (`eye_tracker.py`):
+- `__init__()`: Initializes MediaPipe Face Mesh, sets thresholds and tracking variables
+- `calculate_ear()`: Computes Eye Aspect Ratio from 6 eye landmark points
+- `get_eye_landmarks()`: Extracts specific eye landmarks from MediaPipe results
+- `process_frame()`: Main processing function that detects face, calculates EAR, and detects blinks
+- `run()`: Main loop that captures frames, processes them, and displays results
 
+### Key Features
+
+**Eye Aspect Ratio (EAR) Calculation**:
+- Formula: `EAR = (|p2-p6| + |p3-p5|) / (2 × |p1-p4|)`
+- Uses 6 landmark points per eye (outer, top, top-mid, inner, bottom-mid, bottom)
+- EAR decreases as eyes close (approaches 0)
+
+**Blink Detection**:
+- Temporal smoothing: Requires 2 consecutive frames below threshold
+- State tracking: Only counts transitions from open → closed (avoids duplicate counting)
+- Duration measurement: Tracks start/end times with millisecond precision
+
+**Visual Feedback**:
+- Eye meshes drawn using MediaPipe's `FACEMESH_LEFT_EYE` and `FACEMESH_RIGHT_EYE`
+- Color-coded metrics (cyan, magenta, yellow, red, green)
+- Real-time blink duration display
+
+### Test Files
+
+The `tests/` folder contains test scripts for different phases:
+- `test_phase1_setup.py`: Environment setup verification
+- `test_phase2_face_detection.py`: Face detection testing
+- `test_phase3_eye_landmark_extraction.py`: Eye landmark extraction
+- `test_phase4_ear_calculation.py`: EAR calculation verification
+- `test_phase5_eye_state_classification.py`: Eye state classification
+- `test_phase6_polish_edge_cases.py`: Edge case handling
